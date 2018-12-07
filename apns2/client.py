@@ -62,6 +62,7 @@ class APNsClient(object):
             while True:
                 conn = conn_ref()
                 if conn is None:
+                    logger.warning("Stopping hearbeat")
                     break
 
                 conn.ping('-' * 8)
@@ -213,7 +214,7 @@ class APNsClient(object):
         while retries < MAX_CONNECTION_RETRIES:
             try:
                 self._connection.connect()
-                logger.info('Connected to APNs')
+                logger.warning('Connected to APNs')
                 return
             except Exception:  # pylint: disable=broad-except
                 # close the connnection, otherwise next connect() call would do nothing
